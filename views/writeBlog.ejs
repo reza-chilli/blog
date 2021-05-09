@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>blog</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+      integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+      integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://code.jquery.com/jquery-3.6.0.min.js"
+      integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+      crossorigin="anonymous"
+    ></script>
+
+    <link
+      href="https://cdn.quilljs.com/1.3.6/quill.snow.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="container shadow-lg border-left border-right p-4 mt-4 rounded">
+      <nav class="d-flex justify-content-between mt-2">
+        <div>
+          <h3>write new blog :</h3>
+        </div>
+        <div>
+          <a href="/dashboard" class="btn btn-primary">back</a>
+        </div>
+      </nav>
+      <hr />
+      <div class="mt-4">
+        <form method="POST" action="/dashboard/writeBlog">
+          <div class="form-group">
+            <label for="title">blog title</label>
+            <input
+              type="text"
+              class="form-control"
+              id="title"
+              placeholder="Enter title"
+              name="title"
+            />
+          </div>
+          <% if (titleErr) { %>
+          <div class="alert alert-danger" role="alert"><%= titleErr %></div>
+          <% } %>
+
+          <div id="editor-container"></div>
+
+          <% if (contentErr) { %>
+          <div class="alert alert-danger" role="alert"><%= contentErr %></div>
+          <% } %>
+        </form>
+
+        <div class="mt-4">
+          <button class="btn btn-success" id="saveButton">save</button>
+          <a class="btn btn-danger" href="/dashboard">cancel</a>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+    <script src="/js/blog.js"></script>
+  </body>
+</html>

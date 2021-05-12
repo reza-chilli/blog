@@ -39,11 +39,18 @@
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
+                    <div class="col-10 offset-1">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h1><%=article.title%></h1>
+                            <a href="/dashboard" class="btn btn-primary">Back</a>
+                        </div>
 
-                    <h1><%=article.title%></h1>
 
-                    <%- article.text %>
+                        <%- article.text %>
+                        <p>written by <%=article.writer.username%> at <%=new Date(+article.createdAt).toString()%></p>
+                    </div>
 
+                    <hr>
 
                 </div>
                 <!-- /.container-fluid -->

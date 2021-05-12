@@ -207,7 +207,7 @@ router.post('/writeBlog',
 // *******************************************************************************************
 
 router.get('/article:id', function(req, res) {
-  Article.findOne({_id : req.params.id}, function(err, article) {
+  Article.findOne({_id : req.params.id}).populate({model : 'User', path : 'writer'}).exec(function(err, article) {
     if (err) return res.status(500).send("Internal Server Error :(");
     if (!article) return res.status(404).send("article not found");
     return res.render('article', {article, user : req.session.user});

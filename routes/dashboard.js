@@ -209,12 +209,14 @@ router.post('/writeBlog',
 
 router.get('/article:id', function(req, res) {
   req.session.articleId = req.params.id;
+  let commentErr = req.session.commentErr;
+  req.session.commentErr = null;
   Article.findOne({_id : req.params.id}).populate({model : 'User', path : 'writer'}).exec(function(err, article) {
     if (err) return res.status(500).send("Internal Server Error :(");
     Comment.find({article : req.session.articleId}).populate({model:'User', path : 'writer'}).exec(function(err, comments) {
       if (err) return res.status(500).send("Internal Server Error :(");
       if (!article) return res.status(404).send("article not found");
-      return res.render('article', {article, user : req.session.user, comments});
+      return res.render('article', {article, user : req.session.user, comments, user : req.session.user, commentErr});
     })
 
   })
@@ -225,6 +227,7 @@ router.get('/article:id', function(req, res) {
 router.post('/comment', function(req, res) {
   if (!req.body.comment.trim()) {
     req.session.commentErr = 'write something!'
+    return res.redirect(`/dashboard/article${req.session.articleId}`);
   } else {
     const newComment = new Comment({
       content : req.body.comment.trim(),

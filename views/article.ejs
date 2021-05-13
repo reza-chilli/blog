@@ -52,6 +52,11 @@
                         <form action="/dashboard/comment" method="POST">
                             <h5>write your comments here :</h5>
                             <textarea name="comment" rows="4" class="w-100"></textarea>
+                            <% if (commentErr) { %>
+                                <div class="alert alert-danger" role="alert">
+                                    <%=commentErr%>
+                                </div>
+                            <% } %>
                             <button class="btn btn-success w-100">Submit</button>
                         </form>
                         <hr>
@@ -59,8 +64,24 @@
                         <hr>
                         <% if (comments) { %>
                             <% for (let i = 0;i < comments.length; i++) { %>
-                                <h6><%=comments[i].writer.username%> says :</h6>
-                                <%=comments[i].content%>
+                                <div class="d-flex align-items-center">
+                                    <% if (!comments[i].writer.avatar) { %>
+                                        <img class="img-profile rounded-circle"
+                                        src="../img/undraw_profile.svg"
+                                        width="32px"
+                                        height="32px">
+                                    <% } else { %>
+                                        <img class="img-profile rounded-circle"
+                                        src="<%=comments[i].writer.avatar%>"
+                                        width="32px"
+                                        height="32px">
+                                    <% } %>
+                                    <h6 class="mb-0 ml-2"><%=comments[i].writer.username%> says :</h6>
+                                </div>
+                                <p class="my-3">
+                                    <%=comments[i].content%>
+                                </p>
+
                                 <hr>
                             <% } %>
                         <% } %>

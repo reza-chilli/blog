@@ -4,7 +4,8 @@ const router = express.Router();
 const multer = require("multer");
 const { body, validationResult } = require("express-validator");
 const path = require("path");
-const Article = require('../models/article')
+const Article = require('../models/article');
+const Comment = require('../models/comments');
 
 // ------------------------------multer storage setting------------------------------
 
@@ -207,14 +208,40 @@ router.post('/writeBlog',
 // *******************************************************************************************
 
 router.get('/article:id', function(req, res) {
+  req.session.articleId = req.params.id;
   Article.findOne({_id : req.params.id}).populate({model : 'User', path : 'writer'}).exec(function(err, article) {
     if (err) return res.status(500).send("Internal Server Error :(");
-    if (!article) return res.status(404).send("article not found");
-    return res.render('article', {article, user : req.session.user});
+    Comment.find({article : req.session.articleId}).populate({model:'User', path : 'writer'}).exec(function(err, comments) {
+      if (err) return res.status(500).send("Internal Server Error :(");
+      if (!article) return res.status(404).send("article not found");
+      return res.render('article', {article, user : req.session.user, comments});
+    })
+
   })
 })
 
-// ------------------------------------------logout------------------------------------------
+// ----------------------------------------comments-----------------------------------------
+
+router.post('/comment', function(req, res) {
+  if (!req.body.comment.trim()) {
+    req.session.commentErr = 'write something!'
+  } else {
+    const newComment = new Comment({
+      content : req.body.comment.trim(),
+      article : req.session.articleId,
+      writer : req.session.user._id
+    })
+
+    newComment.save(function(err) {
+      if (err) return res.status(500).send("Internal Server Error");
+      res.redirect(`/dashboard/article${req.session.articleId}`);
+    })
+  }
+})
+
+// *****************************************************************************************
+
+// ------------------------------------------logout-----------------------------------------
 
 router.get("/logOut", function (req, res) {
   req.session.destroy();

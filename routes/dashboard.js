@@ -219,22 +219,50 @@ router.post('/writeBlog',
 
 // *******************************************************************************************
 
+// ----------------------------------------see article----------------------------------------
+
 router.get('/article:id', function(req, res) {
   req.session.articleId = req.params.id;
   let commentErr = req.session.commentErr;
+
   req.session.commentErr = null;
   Article.findOne({_id : req.params.id}).populate({model : 'User', path : 'writer'}).exec(function(err, article) {
     if (err) return res.status(500).send("Internal Server Error :(");
     Comment.find({article : req.session.articleId}).populate({model:'User', path : 'writer'}).exec(function(err, comments) {
       if (err) return res.status(500).send("Internal Server Error :(");
       if (!article) return res.status(404).send("article not found");
-      return res.render('article', {article, user : req.session.user, comments, user : req.session.user, commentErr});
+      let myArticle;
+
+      if (req.session.user._id === String(article.writer._id)) {
+        myArticle = true;
+      }
+
+      return res.render('article', {article, user : req.session.user, comments, user : req.session.user, commentErr, myArticle});
     })
 
   })
 })
 
-// ----------------------------------------comments-----------------------------------------
+// *******************************************************************************************
+
+// ----------------------------------------delete blog----------------------------------------
+
+router.get('/deleteArticle:articleId', function(req, res) {
+  Article.findOne({_id : req.params.articleId}, function(err, article) {
+    if (err) return res.status(500).send('Internal Server Error :(');
+    if (req.session.user._id === String(article.writer)) {
+      Article.deleteOne({_id : req.params.articleId}, function(err) {
+        if (err) return res.status(500).send('Internal Server Error :(');
+        Comment.deleteMany({article : req.params.articleId}, function(err) {
+          if (err) return res.status(500).send('Internal Server Error :(');
+          res.status(200).send();
+        })
+      })
+    }
+  })
+})
+
+// ----------------------------------------comments-------------------------------------------
 
 router.post('/comment', function(req, res) {
   if (!req.body.comment.trim()) {

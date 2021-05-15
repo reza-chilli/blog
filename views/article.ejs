@@ -42,12 +42,17 @@
                     <div class="col-10 offset-1">
                         <div class="d-flex justify-content-between align-items-center">
                             <h1><%=article.title%></h1>
+
                             <a href="/dashboard" class="btn btn-primary w-25">Back</a>
                         </div>
 
 
                         <%- article.text %>
                         <p>written by <%=article.writer.username%> at <%=new Date(+article.createdAt).toString()%></p>
+                        <% if (myArticle) { %>
+                            <button class="btn btn-warning">Edit this Blog</button>   
+                            <button class="btn btn-danger" id="deleteBtn">Delete this Blog</button>    
+                        <% } %>
                         <hr>
                         <form action="/dashboard/comment" method="POST">
                             <h5>write your comments here :</h5>
@@ -117,5 +122,9 @@
 
     <!-- Custom scripts for all pages-->
     <script src="/js/sb-admin-2.min.js"></script>
+    <% if (myArticle) { %>
+        <script src="/js/article.js"></script>
+    <% } %>
+
 </body>
 </html>

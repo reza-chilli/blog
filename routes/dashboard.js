@@ -54,14 +54,26 @@ router.get("/", function (req, res) {
   Article.find({}).populate({model : 'User', path : 'writer'}).exec(function(err, articles) {
     if (err) return res.status(500).send('Internal Server Error :(');
 
-    return res.render("dashboard", { user: req.session.user , articles});
+    return res.render("dashboard", { user: req.session.user , articles, myBlog : false});
   })
 
 });
 
 // ************************************************************************************************
 
-// ----------------------------------------edit profile page----------------------------------------
+// ----------------------------------------myBlog dashboard----------------------------------------
+
+router.get('/myBlogs', function(req, res) {
+  Article.find({writer : req.session.user._id}).populate({model : 'User', path : 'writer'}).exec(function(err, articles) {
+    if (err) return res.status(500).send('Internal Server Error :(');
+
+    return res.render("dashboard", { user: req.session.user , articles, myBlog : true});
+  })
+})
+
+// ************************************************************************************************
+
+// ----------------------------------------edit profile page---------------------------------------
 
 router.get("/profile", function (req, res) {
   let usernameErr, f_nameErr, l_nameErr, uploadErr;

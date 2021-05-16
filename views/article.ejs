@@ -18,7 +18,10 @@
     
         <!-- Custom styles for this template-->
         <link href="/css/sb-admin-2.min.css" rel="stylesheet">
-    
+        <link
+      href="https://cdn.quilljs.com/1.3.6/quill.snow.css"
+      rel="stylesheet"
+    />
     </head>
 <body id="page-top">
     <div id="wrapper">
@@ -46,12 +49,17 @@
                             <a href="/dashboard" class="btn btn-primary w-25">Back</a>
                         </div>
 
+                        <div id="content-para"><%- article.text %></div>
+                        <div id="editor-container" style="display: none;">
+                            <%- article.text %>
+                        </div>
 
-                        <%- article.text %>
                         <p>written by <%=article.writer.username%> at <%=new Date(+article.createdAt).toString()%></p>
                         <% if (myArticle) { %>
-                            <button class="btn btn-warning">Edit this Blog</button>   
-                            <button class="btn btn-danger" id="deleteBtn">Delete this Blog</button>    
+                            <button class="btn btn-success" id="saveBtn" style="display: none;">Save Changes</button>
+                            <button class="btn btn-warning" id="editBtn">Edit this Blog</button>   
+                            <button class="btn btn-danger" id="deleteBtn">Delete this Blog</button>
+                            <button class="btn btn-danger" id="cancelBtn" style="display: none;">Cancel</button>    
                         <% } %>
                         <hr>
                         <form action="/dashboard/comment" method="POST">
@@ -123,6 +131,7 @@
     <!-- Custom scripts for all pages-->
     <script src="/js/sb-admin-2.min.js"></script>
     <% if (myArticle) { %>
+        <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
         <script src="/js/article.js"></script>
     <% } %>
 

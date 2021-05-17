@@ -19,53 +19,69 @@
       integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
       crossorigin="anonymous"
     ></script>
-
+    <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link
       href="https://cdn.quilljs.com/1.3.6/quill.snow.css"
       rel="stylesheet"
     />
+    <link href="/css/sb-admin-2.min.css" rel="stylesheet">
   </head>
-  <body>
-    <div class="container shadow-lg border-left border-right p-4 mt-4 rounded">
-      <nav class="d-flex justify-content-between mt-2">
-        <div>
-          <h3>write new blog :</h3>
-        </div>
-        <div>
-          <a href="/dashboard" class="btn btn-primary">back</a>
-        </div>
-      </nav>
-      <hr />
-      <div class="mt-4">
-        <form method="POST" action="/dashboard/writeBlog">
-          <div class="form-group">
-            <label for="title">blog title</label>
-            <input
-              type="text"
-              class="form-control"
-              id="title"
-              placeholder="Enter title"
-              name="title"
-            />
+  <body id="page-top">
+    <div id="wrapper">
+      <%- include('partialls/sidebar') %>
+      <div id="content-wrapper" class="d-flex flex-column">
+        <div id="content">
+          <%- include('partialls/navbar') %>
+          <div class="container-fluid">
+            <div class="container shadow-lg border-left border-right p-4 mt-4 rounded">
+              <nav class="mt-2">
+                <div>
+                  <h3>write new blog :</h3>
+                </div>
+              </nav>
+              <hr />
+              <div class="mt-4">
+                <form method="POST" action="/dashboard/writeBlog">
+                  <div class="form-group">
+                    <label for="title">blog title</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="title"
+                      placeholder="Enter title"
+                      name="title"
+                    />
+                  </div>
+                  <% if (titleErr) { %>
+                  <div class="alert alert-danger" role="alert"><%= titleErr %></div>
+                  <% } %>
+        
+                  <div id="editor-container"></div>
+        
+                  <% if (contentErr) { %>
+                  <div class="alert alert-danger" role="alert"><%= contentErr %></div>
+                  <% } %>
+                </form>
+        
+                <div class="mt-4">
+                  <button class="btn btn-success" id="saveButton">save</button>
+                  <a class="btn btn-danger" href="/dashboard">cancel</a>
+                </div>
+              </div>
+            </div>
           </div>
-          <% if (titleErr) { %>
-          <div class="alert alert-danger" role="alert"><%= titleErr %></div>
-          <% } %>
-
-          <div id="editor-container"></div>
-
-          <% if (contentErr) { %>
-          <div class="alert alert-danger" role="alert"><%= contentErr %></div>
-          <% } %>
-        </form>
-
-        <div class="mt-4">
-          <button class="btn btn-success" id="saveButton">save</button>
-          <a class="btn btn-danger" href="/dashboard">cancel</a>
         </div>
       </div>
     </div>
+    
+    <script src="/vendor/jquery/jquery.min.js"></script>
+    <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
+    <!-- Core plugin JavaScript-->
+    <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="/js/sb-admin-2.min.js"></script>
     <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
     <script src="/js/blog.js"></script>
   </body>

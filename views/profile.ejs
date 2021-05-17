@@ -1,100 +1,124 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>blog</title>
+
+    <!-- Custom fonts for this template-->
+    <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
-      crossorigin="anonymous"
-    />
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
-      crossorigin="anonymous"
-    ></script>
-  </head>
-  <body>
-      <div class="container">
-        <div class="row mt-5">
-            <div class="col-6 offset-3 card p-4">
-              <div class="card-body">
-                <h5 class="card-title mb-5">change your account information</h5>
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
 
-                <form action="/dashboard/changeProfile" method="POST">
-                  <div class="mb-3">
-                    <label for="exampleInputEmail1" class="form-label">user name</label>
-                    <input type="text" class="form-control" value="<%=user.username%>" name="username">
+    <!-- Custom styles for this template-->
+    <link href="/css/sb-admin-2.min.css" rel="stylesheet">
+
+</head>
+  <body id="page-top">
+    <div id="wrapper">
+      <%- include('partialls/sidebar') %>
+      <div id="content-wrapper" class="d-flex flex-column">
+        <div id="content">
+          <%- include('partialls/navbar') %>
+          <div class="container-fluid">
+            <div class="container">
+              <div class="row mt-5">
+                  <div class="col-6 offset-3 card p-4">
+                    <div class="card-body">
+                      <h5 class="card-title mb-5">change your account information</h5>
+      
+                      <form action="/dashboard/changeProfile" method="POST">
+                        <div class="mb-3">
+                          <label for="exampleInputEmail1" class="form-label">user name</label>
+                          <input type="text" class="form-control" value="<%=user.username%>" name="username">
+                        </div>
+      
+                        <% if (usernameErr) { %>
+                          <div class="alert alert-danger" role="alert">
+                            <%=usernameErr%>
+                          </div>
+                        <% } %>
+      
+                          <div class="mb-3">
+                            <label for="exampleInputEmail1" class="form-label">first name</label>
+                            <input type="text" class="form-control" value="<%=user.f_name%>" name="f_name">
+                          </div>
+      
+                          <% if (f_nameErr) { %>
+                            <div class="alert alert-danger" role="alert">
+                              <%=f_nameErr%>
+                            </div>
+                          <% } %>
+      
+                          <div class="mb-3">
+                            <label for="exampleInputPassword1" class="form-label">last name</label>
+                            <input type="text" class="form-control" value="<%=user.l_name%>" name="l_name">
+                          </div>
+      
+                          <% if (l_nameErr) { %>
+                            <div class="alert alert-danger" role="alert">
+                              <%=l_nameErr%>
+                            </div>
+                          <% } %>
+      
+                          <div class="mb-5">
+                            <label for="exampleInputEmail1" class="form-label">phone number</label>
+                            <input type="text" class="form-control" value="<%=user.phonenumber%>" name="phonenumber">
+                          </div>
+      
+      
+                        
+                          <button type="submit" class="btn btn-primary">Submit</button>
+                          <a href="/dashboard" class="btn btn-danger" role="button">
+                            cancel
+                          </a>
+                        </form>
+      
+      
+      
+      
+      
+                    </div>
+      
                   </div>
-
-                  <% if (usernameErr) { %>
-                    <div class="alert alert-danger" role="alert">
-                      <%=usernameErr%>
+                  <div class="col-6 offset-3 card p-4 my-4">
+                    <div class="card-body">
+                      <h5 class="card-title mb-5">change your account picture</h5>
+                        <form action="/dashboard/upload" method="POST" enctype="multipart/form-data">
+                          <div class="mb-3">
+                            <label for="formFile" class="form-label"><%= typeof uploadErr!== 'undefined' ? uploadErr : '' %></label>
+                            <input class="form-control-file" type="file" name="myImage">
+                          </div>
+                          <button type="submit" class="btn btn-primary">Submit</button>
+                          <a href="/dashboard" class="btn btn-danger" role="button">
+                            cancel
+                          </a>
+                        </form>
+      
                     </div>
-                  <% } %>
-
-                    <div class="mb-3">
-                      <label for="exampleInputEmail1" class="form-label">first name</label>
-                      <input type="text" class="form-control" value="<%=user.f_name%>" name="f_name">
-                    </div>
-
-                    <% if (f_nameErr) { %>
-                      <div class="alert alert-danger" role="alert">
-                        <%=f_nameErr%>
-                      </div>
-                    <% } %>
-
-                    <div class="mb-3">
-                      <label for="exampleInputPassword1" class="form-label">last name</label>
-                      <input type="text" class="form-control" value="<%=user.l_name%>" name="l_name">
-                    </div>
-
-                    <% if (l_nameErr) { %>
-                      <div class="alert alert-danger" role="alert">
-                        <%=l_nameErr%>
-                      </div>
-                    <% } %>
-
-                    <div class="mb-5">
-                      <label for="exampleInputEmail1" class="form-label">phone number</label>
-                      <input type="text" class="form-control" value="<%=user.phonenumber%>" name="phonenumber">
-                    </div>
-
-
-                  
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                    <a href="/dashboard" class="btn btn-danger" role="button">
-                      cancel
-                    </a>
-                  </form>
-
-
-
-
-
-              </div>
-
-            </div>
-            <div class="col-6 offset-3 card p-4 my-4">
-              <div class="card-body">
-                <h5 class="card-title mb-5">change your account picture</h5>
-                  <form action="/dashboard/upload" method="POST" enctype="multipart/form-data">
-                    <div class="mb-3">
-                      <label for="formFile" class="form-label"><%= typeof uploadErr!== 'undefined' ? uploadErr : '' %></label>
-                      <input class="form-control" type="file" name="myImage">
-                    </div>
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                    <a href="/dashboard" class="btn btn-danger" role="button">
-                      cancel
-                    </a>
-                  </form>
-
+                  </div>
               </div>
             </div>
+          </div>
         </div>
       </div>
+    </div>
+      
+
+
+    <script src="/vendor/jquery/jquery.min.js"></script>
+    <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="/js/sb-admin-2.min.js"></script>
   </body>
 </html>

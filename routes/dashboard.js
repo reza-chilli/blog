@@ -250,7 +250,7 @@ router.get('/article:id', function(req, res) {
 router.get('/deleteArticle:articleId', function(req, res) {
   Article.findOne({_id : req.params.articleId}, function(err, article) {
     if (err) return res.status(500).send('Internal Server Error :(');
-    if (req.session.user._id === String(article.writer)) {
+    if (req.session.user._id === String(article.writer) || req.session.user.role === 'admin') {
       Article.deleteOne({_id : req.params.articleId}, function(err) {
         if (err) return res.status(500).send('Internal Server Error :(');
         Comment.deleteMany({article : req.params.articleId}, function(err) {
@@ -321,5 +321,7 @@ router.get('/allUsers', function(req, res) {
     res.status(403).send('permission denied!')
   }
 })
+
+// ******************************************************************************************
 
 module.exports = router;

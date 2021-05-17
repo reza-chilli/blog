@@ -261,7 +261,23 @@ router.get('/deleteArticle:articleId', function(req, res) {
     }
   })
 })
+// *******************************************************************************************
 
+// ----------------------------------------edit article---------------------------------------
+
+router.post('/editArticle:articleId', function(req, res) {
+  Article.findOne({_id : req.params.articleId}, function(err, article) {
+    if (err) return res.status(500).send('Internal Server Error :(');
+    if (req.session.user._id === String(article.writer)) {
+      Article.updateOne({_id : req.params.articleId}, {$set : {text : req.body.content}}, function(err) {
+        if (err) return res.status(500).send('Internal Server Error :(');
+        res.status(200).send();
+      })
+    } else {
+      res.status(403).send('permission denied!')
+    }
+  })
+})
 // ----------------------------------------comments-------------------------------------------
 
 router.post('/comment', function(req, res) {

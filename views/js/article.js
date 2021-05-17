@@ -1,4 +1,5 @@
 $(document).ready(function() {
+
   let quill = new Quill('#editor-container', {
     modules: {
       toolbar: [
@@ -53,3 +54,12 @@ $(document).ready(function() {
       })
     })
 })
+function deleteComment(el) {
+  $.ajax({
+    method : 'GET',
+    url : `/dashboard/deleteComment${el.id.slice(7,)}`,
+    success : function() {
+      location.reload();
+    }
+  })
+}

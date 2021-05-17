@@ -79,19 +79,28 @@
                         <hr>
                         <% if (comments) { %>
                             <% for (let i = 0;i < comments.length; i++) { %>
-                                <div class="d-flex align-items-center">
-                                    <% if (!comments[i].writer.avatar) { %>
-                                        <img class="img-profile rounded-circle"
-                                        src="../img/undraw_profile.svg"
-                                        width="32px"
-                                        height="32px">
-                                    <% } else { %>
-                                        <img class="img-profile rounded-circle"
-                                        src="<%=comments[i].writer.avatar%>"
-                                        width="32px"
-                                        height="32px">
+                                <div class="d-flex align-items-center justify-content-between">
+                                    <div class="d-flex align-items-center">
+                                        <% if (!comments[i].writer.avatar) { %>
+                                            <img class="img-profile rounded-circle"
+                                            src="../img/undraw_profile.svg"
+                                            width="32px"
+                                            height="32px">
+                                        <% } else { %>
+                                            <img class="img-profile rounded-circle"
+                                            src="<%=comments[i].writer.avatar%>"
+                                            width="32px"
+                                            height="32px">
+                                        <% } %>
+                                        <h6 class="mb-0 ml-2"><%=comments[i].writer.username%> says :</h6>
+                                    </div>
+                                    <% if (user.role === "admin") { %>
+                                        <div>
+                                            <button class="btn btn-danger btn-sm" id="comment<%=comments[i]._id%>" onclick="deleteComment(this)">Delete this Comment</button>
+                                        </div>
                                     <% } %>
-                                    <h6 class="mb-0 ml-2"><%=comments[i].writer.username%> says :</h6>
+
+
                                 </div>
                                 <p class="my-3">
                                     <%=comments[i].content%>

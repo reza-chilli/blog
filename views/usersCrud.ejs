@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title>blog</title>
+        <link
+          rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+          crossorigin="anonymous"
+        />
+        <script
+          src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+          integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+          crossorigin="anonymous"
+        ></script>
+        <script
+          src="https://code.jquery.com/jquery-3.6.0.min.js"
+          integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+          crossorigin="anonymous"
+        ></script>
+        <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+
+        <link href="/css/sb-admin-2.min.css" rel="stylesheet">
+      </head>
+<body id="page-top">
+    <div id="wrapper">
+        <%- include('partialls/sidebar') %>
+        <div id="content-wrapper" class="d-flex flex-column">
+            <div id="content">
+                <%- include('partialls/navbar') %>
+                <div class="container-fluid">
+                    <h3>Users Crud</h3>
+                    <table class="table table-sm table-striped table-hover">
+                        <thead>
+                          <tr>
+                            <th scope="col">Index</th>
+                            <th scope="col">User Name</th>
+                            <th scope="col">First Name</th>
+                            <th scope="col">Last Name</th>
+                            <th scope="col">Phone Number</th>
+                            <th scope="col">Gender</th>
+                            <th scope="col">Role</th>
+                            <th scope="col"></th>
+                          </tr>
+                        </thead>
+                        <tbody>
+
+                            <% for (let i = 0;i < users.length; i++) { %>
+                                <tr>
+                                    <th scope="row"><%= i + 1 %></th>
+                                    <td><%=users[i].username%></td>
+                                    <td><%=users[i].f_name%></td>
+                                    <td><%=users[i].l_name%></td>
+                                    <td><%=users[i].phonenumber%></td>
+                                    <td><%=users[i].gender%></td>
+                                    <td><%=users[i].role%></td>
+                                    <td>
+                                        <button class="btn btn-danger btn-sm">Delete Bloger</button>
+                                        <button class="btn btn-warning btn-sm">Restore Password</button>
+                                    </td>
+                                  </tr>
+                            <% } %>
+
+                        </tbody>
+                      </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Bootstrap core JavaScript-->
+    <script src="/vendor/jquery/jquery.min.js"></script>
+    <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="/js/sb-admin-2.min.js"></script>
+</body>
+</html>

@@ -30,10 +30,18 @@
                 <a class="collapse-item" href="/dashboard">All Blogs</a>
             </div>
         </div>
+        
     </li>
     <!-- Divider -->
-
-
+    <hr class="sidebar-divider my-0">
+    <% if (user.role==="admin") { %>
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="/dashboard/allUsers">
+                <i class="	fa fa-address-book"></i>
+                All Users
+            </a>
+        </li>
+    <% } %>
 
 
     <!-- Divider -->

@@ -309,4 +309,17 @@ router.get("/logOut", function (req, res) {
 
 // ******************************************************************************************
 
+// --------------------------------------admin all users-------------------------------------
+
+router.get('/allUsers', function(req, res) {
+  if (req.session.user.role === 'admin') {
+    User.find({}, function(err, users) {
+      if (err) return res.status(500).send();
+      res.render('usersCrud', {users, user : req.session.user});
+    })
+  } else {
+    res.status(403).send('permission denied!')
+  }
+})
+
 module.exports = router;

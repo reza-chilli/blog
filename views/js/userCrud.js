@@ -7,3 +7,15 @@ function deleteUser(el) {
         }
     })
 }
+
+function restorePass(el) {
+    $("#confirmPassBtn").on('click', function() {
+        $.ajax({
+            method : 'GET',
+            url : `/dashboard/restorePass${$(el).parent().attr('id')}`,
+            success : function() {
+                alert('restore success');
+            }
+        })
+    })
+}

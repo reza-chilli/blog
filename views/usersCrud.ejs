@@ -57,7 +57,7 @@
                                     <td><%=users[i].role%></td>
                                     <td id="<%=users[i]._id%>">
                                         <button class="btn btn-danger btn-sm" onclick="deleteUser(this)">Delete Bloger</button>
-                                        <button class="btn btn-warning btn-sm" data-toggle="modal" data-target="restorePassword">Restore Password</button>
+                                        <button class="btn btn-warning btn-sm" data-toggle="modal" data-target="#restorePassword" onclick="restorePass(this)">Restore Password</button>
                                     </td>
                                   </tr>
                             <% } %>
@@ -70,21 +70,21 @@
     </div>
 
 
-    <div class="modal fade" id="restorePassword" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="restorePassword" tabindex="-1" role="dialog" aria-labelledby="restorePassword" aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+            <h5 class="modal-title" id="exampleModalLabel">Restore Password</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
           <div class="modal-body">
-            ...
+            Are you sure you want to change this user password to his/her phone number?
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Save changes</button>
+            <button type="button" class="btn btn-success" id="confirmPassBtn" data-dismiss="modal">Confirm</button>
           </div>
         </div>
       </div>

@@ -337,4 +337,19 @@ router.get('/deleteComment:commentId', function(req, res) {
   }
 })
 
+// ******************************************************************************************
+
+// -------------------------------------admin delete user------------------------------------
+
+router.get('/deleteUser:userId', function(req, res) {
+  if (req.session.user.role === 'admin') {
+    User.findOneAndDelete({_id : req.params.userId}, function(err) {
+      if (err) return res.status(500).send("Internal Server Error");
+      res.status(200).send();
+    })
+  } else {
+    res.status(403).send('permission denied!')
+  }
+})
+
 module.exports = router;

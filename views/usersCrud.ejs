@@ -55,9 +55,9 @@
                                     <td><%=users[i].phonenumber%></td>
                                     <td><%=users[i].gender%></td>
                                     <td><%=users[i].role%></td>
-                                    <td>
-                                        <button class="btn btn-danger btn-sm">Delete Bloger</button>
-                                        <button class="btn btn-warning btn-sm">Restore Password</button>
+                                    <td id="<%=users[i]._id%>">
+                                        <button class="btn btn-danger btn-sm" onclick="deleteUser(this)">Delete Bloger</button>
+                                        <button class="btn btn-warning btn-sm" data-toggle="modal" data-target="restorePassword">Restore Password</button>
                                     </td>
                                   </tr>
                             <% } %>
@@ -68,6 +68,27 @@
             </div>
         </div>
     </div>
+
+
+    <div class="modal fade" id="restorePassword" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            ...
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary">Save changes</button>
+          </div>
+        </div>
+      </div>
+    </div>
     <!-- Bootstrap core JavaScript-->
     <script src="/vendor/jquery/jquery.min.js"></script>
     <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -77,5 +98,6 @@
 
     <!-- Custom scripts for all pages-->
     <script src="/js/sb-admin-2.min.js"></script>
+    <script src="/js/userCrud.js"></script>
 </body>
 </html>

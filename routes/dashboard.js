@@ -54,7 +54,7 @@ router.get("/", function (req, res) {
   Article.find({}).populate({model : 'User', path : 'writer'}).exec(function(err, articles) {
     if (err) return res.status(500).send('Internal Server Error :(');
 
-    return res.render("dashboard", { user: req.session.user , articles, myBlog : false});
+    return res.render("dashboard", { user: req.session.user , articles : articles.reverse(), myBlog : false});
   })
 
 });
@@ -67,7 +67,7 @@ router.get('/myBlogs', function(req, res) {
   Article.find({writer : req.session.user._id}).populate({model : 'User', path : 'writer'}).exec(function(err, articles) {
     if (err) return res.status(500).send('Internal Server Error :(');
 
-    return res.render("dashboard", { user: req.session.user , articles, myBlog : true});
+    return res.render("dashboard", { user: req.session.user , articles : articles.reverse(), myBlog : true});
   })
 })
 

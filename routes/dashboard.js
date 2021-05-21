@@ -176,7 +176,8 @@ router.get("/write", function (req, res) {
   let titleErr,contentErr;
   if (req.session.writeBlogErr) {
     titleErr = req.session.writeBlogErr.find(el => el.param === 'title');
-    contentErr = req.session.writeBlogErr.find(el => el.param === 'content');
+    contentErr = req.session.writeBlogErr.find(el => el.param === 'plainText');
+    req.session.writeBlogErr = null;
     if (titleErr) {
       titleErr = 'title must contain atleast 3 charecters';
     }
@@ -193,7 +194,7 @@ router.get("/write", function (req, res) {
 
 router.post('/writeBlog',
   body("title").isLength({ min: 3 }),
-  body("content").isLength({ min: 12 }),
+  body("plainText").isLength({ min: 5 }),
   function(req, res) {
 
     let errors = validationResult(req);
@@ -209,7 +210,6 @@ router.post('/writeBlog',
       })
       article.save(function(err) {
         if (err) {
-          console.log(err);
           res.status(500).send('Internal Server Error :(');
         }
         return res.status(200).send();
@@ -238,7 +238,7 @@ router.get('/article:id', function(req, res) {
         myArticle = true;
       }
 
-      return res.render('article', {article, user : req.session.user, comments, user : req.session.user, commentErr, myArticle});
+      return res.render('article', {article, user : req.session.user, comments, commentErr, myArticle});
     })
 
   })
@@ -346,7 +346,22 @@ router.get('/deleteUser:userId', function(req, res) {
   if (req.session.user.role === 'admin') {
     User.findOneAndDelete({_id : req.params.userId}, function(err) {
       if (err) return res.status(500).send("Internal Server Error");
-      res.status(200).send();
+      Comment.deleteMany({writer : req.params.userId}, function(err) {
+        if (err) return res.status(500).send("Internal Server Error");
+        Article.find({writer : req.params.userId}, function(err, articles) {
+          if (err) return res.status(500).send("Internal Server Error");
+          for (let i = 0;i <articles.length; i++) {
+            Comment.deleteMany({article : articles[i]._id}, function(err) {
+              if (err) return res.status(500).send("Internal Server Error");
+            })
+            Article.deleteOne({_id : articles[i]._id}, function(err) {
+              if (err) return res.status(500).send("Internal Server Error");
+            })
+          }
+          res.status(200).send();
+        })
+      })
+
     })
   } else {
     res.status(403).send('permission denied!')

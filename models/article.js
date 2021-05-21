@@ -10,6 +10,10 @@ const articleSchema = new Schema({
         type : String,
         required : true
     },
+    plainText : {
+        type : String,
+        required : true
+    },
     avatar : {
         type : String
     },

@@ -204,6 +204,7 @@ router.post('/writeBlog',
       const article = new Article({
         title : req.body.title,
         text : req.body.content,
+        plainText : req.body.plainText,
         writer : req.session.user._id
       })
       article.save(function(err) {

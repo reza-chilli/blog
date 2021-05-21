@@ -55,11 +55,13 @@
 
                         <% for(let i = 0; i < articles.length; i++) { %>
                             <div class="col-4 p-3">
-                                <div class="card">
+                                <div class="card h-100">
 
                                     <div class="card-body">
                                       <h3 class="card-title"><%= articles[i].title%></h3>
                                       <hr>
+                                      <p><%=articles[i].plainText%></p>
+                                      
                                       <p class="card-text">writen by <%=articles[i].writer.username%></p>
                                       <p class="card-text"><small>published at <%=new Date(+articles[i].createdAt).toString()%></small> </p>
                                       <a href="/dashboard/article<%=articles[i]._id%>" class="btn btn-primary">read article</a>

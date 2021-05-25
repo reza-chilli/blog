@@ -162,8 +162,10 @@ router.post("/upload", function (req, res) {
       User.findOneAndUpdate({_id : req.session.user._id}, {$set : {avatar : `../uploads/${req.file.filename}`}}, {new : true}, function (err, user) {
         if (err) return res.status(500).send('Internal Server Error :(');
         req.session.user = user;
+        res.redirect("/dashboard");
       })
-      res.redirect("/dashboard");
+
+
     }
   });
 });
